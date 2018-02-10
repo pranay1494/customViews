@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.pranay.circularimage.MainActivity">
+
+   <!-- <ImageView
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/circular_image" />-->
+
+    <com.example.pranay.circularimage.CustomProgressBar
+        android:id="@+id/customProgress"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        />
+
+    <com.example.pranay.circularimage.CustomSeekbar
+        android:id="@+id/seekbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"/>
+
+    <com.example.pranay.circularimage.CustomEdittext
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:singleLine="true"/>
+
+</LinearLayout>
