@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CustomProgressBar customProgress;
     private CustomSeekbar seekbar;
+    private CustomButtonWithimageView btnYesNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         customProgress = findViewById(R.id.customProgress);
         seekbar = findViewById(R.id.seekbar);
+        btnYesNo = findViewById(R.id.btnYesNo);
 
         List<String> header = new ArrayList<>();
         header.add("hello");
@@ -61,5 +64,18 @@ public class MainActivity extends AppCompatActivity {
         seekbar.setRangeList(ranges,rangeTexts);
 
 
+        btnYesNo.setBtnTexts("yes","no");
+        btnYesNo.setImages(getResources().getDrawable(R.drawable.ic_launcher_foreground),getResources().getDrawable(R.drawable.ic_action_name));
+        btnYesNo.setOnclickListener(new CustomButtonWithimageView.OnClickListener() {
+            @Override
+            public void onPositiveBtnClicked() {
+                Toast.makeText(MainActivity.this, "yes", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNegativeBtnClicked() {
+                Toast.makeText(MainActivity.this, "No", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

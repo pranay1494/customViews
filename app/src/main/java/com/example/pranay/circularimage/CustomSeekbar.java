@@ -284,6 +284,15 @@ public class CustomSeekbar extends FrameLayout {
     }
 
     public void isEdittextEnabled(boolean isEnabled){
-        etSeekBar.setEnabled(isEnabled);
+        if (etSeekBar!=null) {
+            etSeekBar.setEnabled(isEnabled);
+        }
+    }
+
+    public String getProgress(){
+        if (etSeekBar!=null){
+            return etSeekBar.getText().toString();
+        }
+        return null;
     }
 }
