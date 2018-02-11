@@ -3,16 +3,25 @@ package com.example.pranay.circularimage;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ActionMode;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +53,7 @@ public class CustomSeekbar extends FrameLayout {
     private ImageView imgHeader;
     private int headerImgRes;
     private ArrayList<String> mRangeTexts;
+    private CustomEdittext etSeekBar;
 
 
     public CustomSeekbar(@NonNull Context context) {
@@ -74,8 +84,8 @@ public class CustomSeekbar extends FrameLayout {
         mSeekbar = mView.findViewById(R.id.seek_bar);
         relativeLayout = mView.findViewById(R.id.relative_layout);
         imgHeader = mView.findViewById(R.id.ivHeader);
+        etSeekBar = mView.findViewById(R.id.etSeekBar);
         imgHeader.setY(mSeekbar.getY()+getKnownDPI(5));
-        //imgHeader.setX(mSeekbar.getX());
     }
 
     @Override
@@ -84,7 +94,9 @@ public class CustomSeekbar extends FrameLayout {
         mSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (mSeekbar != null) {
+                if (mSeekbar != null && mFactor !=0) {
+                    int etProgress = progress * mFactor + minRange;
+                    etSeekBar.setText("" + etProgress);
                     Rect thumbBounds = mSeekbar.getThumb().getBounds();
                     if (imgHeader!=null){
                         if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
@@ -102,7 +114,57 @@ public class CustomSeekbar extends FrameLayout {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (!etSeekBar.hasFocus()) {
+                    etSeekBar.requestFocus();
+                }
+            }
+        });
 
+
+        etSeekBar.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    if (!etSeekBar.getText().toString().isEmpty()) {
+                        if (Integer.parseInt(etSeekBar.getText().toString()) >= maxRange) {
+                            etSeekBar.setText(String.valueOf(maxRange));
+                        } else if (Integer.parseInt(etSeekBar.getText().toString()) <= minRange) {
+                            etSeekBar.setText(String.valueOf(minRange));
+                        }
+                        float value = Float.parseFloat(etSeekBar.getText().toString());
+                        float seekBarValue = 0;
+                        if (minRange >= 0) {
+                            seekBarValue = (value - minRange) / mFactor;
+                        }
+                        mSeekbar.setProgress((int) Math.ceil(seekBarValue));
+                    } else {
+                        etSeekBar.setText(String.valueOf(minRange));
+                    }
+                }
+            }
+        });
+        etSeekBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // do your stuff here
+                    if (!etSeekBar.getText().toString().isEmpty()) {
+                        if (Integer.parseInt(etSeekBar.getText().toString()) >= maxRange) {
+                            etSeekBar.setText(String.valueOf(maxRange));
+                        } else if (Integer.parseInt(etSeekBar.getText().toString()) <= minRange) {
+                            etSeekBar.setText(String.valueOf(minRange));
+                        }
+                        float value = Float.parseFloat(etSeekBar.getText().toString());
+                        float seekBarValue = 0;
+                        if (minRange >= 0) {
+                            seekBarValue = (value - minRange) / mFactor;
+                        }
+                        mSeekbar.setProgress((int) Math.ceil(seekBarValue));
+                    } else {
+                        etSeekBar.setText(String.valueOf(minRange));
+                    }
+                }
+                return false;
             }
         });
 
@@ -189,8 +251,6 @@ public class CustomSeekbar extends FrameLayout {
         }
     }
 
-
-
     public void setThumbImage(int drawableId){
         this.mThumb = drawableId;
     }
@@ -209,5 +269,21 @@ public class CustomSeekbar extends FrameLayout {
 
     private int getKnownDPI(int pixels) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,pixels,getContext().getResources().getDisplayMetrics());
+    }
+
+    private void hideEditText(boolean visibility){
+        if (!visibility && etSeekBar!=null){
+            etSeekBar.setVisibility(GONE);
+        }else if (visibility && etSeekBar!=null){
+            etSeekBar.setVisibility(VISIBLE);
+        }
+    }
+
+    public void setCompoundDrawableOfEditText(@Nullable Drawable left, @Nullable Drawable top, @Nullable Drawable right, @Nullable Drawable bottom){
+        etSeekBar.setDrawables(left,top,right,bottom);
+    }
+
+    public void isEdittextEnabled(boolean isEnabled){
+        etSeekBar.setEnabled(isEnabled);
     }
 }

@@ -27,13 +27,13 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"/>
 
-    <com.example.pranay.circularimage.CustomEdittext
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:singleLine="true"/>
+    <!--<com.example.pranay.circularimage.CustomEdittext-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="80dp"-->
+        <!--android:layout_marginRight="80dp"-->
+        <!--android:padding="10dp"-->
+        <!--android:gravity="center"-->
+        <!--android:singleLine="true"/>-->
 
 </LinearLayout>
