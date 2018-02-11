@@ -23,6 +23,7 @@ public class CustomHeaderText extends LinearLayout {
     private ImageView ivInfo;
     private SpannableString strHeader;
     private Drawable imgInfo;
+    private OnInfoiconClickListener clickListener;
 
     public CustomHeaderText(Context context) {
         super(context);
@@ -56,7 +57,15 @@ public class CustomHeaderText extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        setView();
+        //setView();
+        if (clickListener!=null){
+            ivInfo.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onclick();
+                }
+            });
+        }
     }
 
     private void setView() {
@@ -82,5 +91,13 @@ public class CustomHeaderText extends LinearLayout {
                 setView();
             }
         });
+    }
+
+    public void setOnInfoiconClickListener(OnInfoiconClickListener clickListener){
+        this.clickListener = clickListener;
+    }
+
+    interface OnInfoiconClickListener{
+        void onclick();
     }
 }

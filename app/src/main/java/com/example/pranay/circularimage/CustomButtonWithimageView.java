@@ -74,7 +74,8 @@ public class CustomButtonWithimageView extends LinearLayout {
                 ivYesBtn.setVisibility(VISIBLE);
                 btnNo.setSelected(false);
                 btnYes.setSelected(true);
-                clickListener.onPositiveBtnClicked();
+                if (clickListener!=null)
+                    clickListener.onPositiveBtnClicked();
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +85,8 @@ public class CustomButtonWithimageView extends LinearLayout {
                 ivNoBtn.setVisibility(VISIBLE);
                 btnNo.setSelected(true);
                 btnYes.setSelected(false);
-                clickListener.onNegativeBtnClicked();
+                if (clickListener!=null)
+                    clickListener.onNegativeBtnClicked();
             }
         });
     }
