@@ -64,7 +64,7 @@ public class CustomHeaderText extends LinearLayout {
         ivInfo.setImageDrawable(imgInfo);
     }
 
-    public void setText(final SpannableString string){
+    public void setHeaderText(final SpannableString string){
         tvHeader.post(new Runnable() {
             @Override
             public void run() {
@@ -75,7 +75,7 @@ public class CustomHeaderText extends LinearLayout {
     }
 
     public void setImgInfo(Drawable img){
-        imgInfo = imgInfo;
+        imgInfo = img;
         ivInfo.post(new Runnable() {
             @Override
             public void run() {

@@ -1,8 +1,13 @@
 package com.example.pranay.circularimage;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private CustomProgressBar customProgress;
     private CustomSeekbar seekbar;
     private CustomButtonWithimageView btnYesNo;
+    private CustomHeaderText headerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         customProgress = findViewById(R.id.customProgress);
         seekbar = findViewById(R.id.seekbar);
         btnYesNo = findViewById(R.id.btnYesNo);
+        headerText = findViewById(R.id.headerText);
 
         List<String> header = new ArrayList<>();
         header.add("hello");
@@ -78,7 +85,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        SpannableString string = new SpannableString("This is an example of Custom Button");
+        String str = string.toString();
+        String toBold = "Custom Button";
+        int start = str.indexOf(toBold);
+        int end = start +toBold.length();
+        string.setSpan(new StyleSpan(Typeface.BOLD), start,end,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        headerText.setImgInfo(getResources().getDrawable(R.drawable.ic_action_name));
+        headerText.setHeaderText(string);
 
     }
 }
